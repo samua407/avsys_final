@@ -6,9 +6,45 @@
 //
 //
 
-#ifndef __avsys_final2__note__
-#define __avsys_final2__note__
+#include "ofMain.h"
+#include "ofxOpenCv.h"
+#include "ofxBlobTracker.h"
+#include "ofxOsc.h"
 
-#include <iostream>
 
-#endif /* defined(__avsys_final2__note__) */
+
+
+class note: {
+    
+public:
+    
+    //methods
+    
+    void colorVel(ofxCvContourFinder);
+    void colorVelSmooth();
+    void sendColorVel(string);
+
+    
+    //constructor
+    
+    note();
+    
+    //variables
+
+    //color
+    
+    
+    //velocity
+    int posDiffX;
+    int posDiffY;
+    int velocity;
+    int velocitySmoothed = 0;
+    ofPoint pos;
+    ofVec3f v1;
+
+    //message
+    string activeColor;
+    int slowYourRoll = 0;
+    ofxOscSender sender;
+    
+};

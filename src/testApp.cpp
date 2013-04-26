@@ -1,4 +1,5 @@
 #include "testApp.h"
+#include "note.h"
 
 //--------------------------------------------------------------
 void testApp::setup(){
@@ -49,7 +50,9 @@ void testApp::update(){
         hsb.convertToGrayscalePlanarImages(hue, sat, bri);
         
         
-        //color tracking begins
+///////////////////////////////
+//////////color tracking begins
+///////////////////////////////
         
         //PINK COLOR TRACKING
         //filter image based on the hue value were looking for
@@ -60,6 +63,11 @@ void testApp::update(){
         //run the contour finder on the filtered image to find blobs with a certain hue
         contoursPink.findContours(filteredPink, 50, w*h, 1, false);
         
+        //smooth + send
+        pinkNote.colorVelSmooth();
+        pinkNote.sendColorVel("pink");
+        
+        
         
         //BLUE COLOR TRACKING
         //filter image based on the hue value were looking for
@@ -69,6 +77,10 @@ void testApp::update(){
         
         //run the contour finder on the filtered image to find blobs with a certain hue
         contoursBlue.findContours(filteredBlue, 50, w*h/2, 1, false);
+        
+        //find velocity
+        blueNote.colorVelSmooth();
+        blueNote.sendColorVel("blue");
         
         
         
@@ -81,6 +93,11 @@ void testApp::update(){
         //run the contour finder on the filtered image to find blobs with a certain hue
         contoursGreen.findContours(filteredGreen, 50, w*h, 1, false);
         
+        //find velocity
+        greenNote.colorVelSmooth();
+        greenNote.sendColorVel("green");
+        
+        
         
         //RED COLOR TRACKING
         //filter image based on the hue value were looking for
@@ -91,6 +108,10 @@ void testApp::update(){
         //run the contour finder on the filtered image to find blobs with a certain hue
         contoursRed.findContours(filteredRed, 50, w*h/2, 1, false);
         
+        //find velocity
+        redNote.colorVelSmooth();
+        redNote.colorVel("red");
+        
     }
     
 }
@@ -99,23 +120,43 @@ void testApp::update(){
 void testApp::draw(){
     ofSetColor(255,255,255);
     
+    
+    
+////////find velocity using class
+    pinkNote.colorVel(contoursPink);
+    blueNote.colorVel(contoursBlue);
+    greenNote.colorVel(contoursGreen);
+    redNote.colorVel(contoursRed);
+
+    
+///////draw RGB Image
     rgb.draw(w/2,2);
+   
+///////draw Contour Images
     contoursPink.draw(0,240);
     ofDrawBitmapString("Pink countours (above)", 5, 490);
-    ofDrawBitmapString("Velocity: ", 5, 505); //ADD VELOCITY
+    ofDrawBitmapString(&"Velocity: " + [ redNote.velocitySmoothed], 5, 505); //PRINT SMOOTHED VELOCITY
+    
     contoursBlue.draw(w,240);
     ofDrawBitmapString("Blue contours (above)", w+5, 490);
-    ofDrawBitmapString("Velocity: ", w+5, 505); //ADD VELOCITY
+    ofDrawBitmapString(&"Velocity: " [ blueNote.velocitySmoothed], w+5, 505); //PRINT SMOOTHED VELOCITY
+    
     contoursGreen.draw(0, 500);
     ofDrawBitmapString("Green contours (above)", 5, 750);
-    ofDrawBitmapString("Velocity: ", 5, 765); //ADD VELOCITY
+    ofDrawBitmapString(&"Velocity: " [ greenNote.velocitySmoothed], 5, 765); //PRINT SMOOTHED VELOCITY
+    
     contoursRed.draw(w, 500);
     ofDrawBitmapString("Red contours (above)", w+5, 750);
-    ofDrawBitmapString("Velocity: ", w+5, 765); //ADD VELOCITY
+    ofDrawBitmapString(&"Velocity: "[ redNote.velocitySmoothed], w+5, 765); //PRINT SMOOTHED VELOCITY
     
     ofSetColor(255, 0, 0);
     ofFill();
     
+    
+
+
+    
+
     
 }
 

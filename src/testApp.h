@@ -7,6 +7,7 @@
 #include "note.h"
 
 
+
 class testApp : public ofBaseApp{
     
 public:
@@ -33,9 +34,15 @@ public:
     int w, h;
     int defineHue;
     
-    ofPoint pos;
-    ofPoint newPos;
+    ofPoint posPink;
+    ofPoint newPinkPos;
+    float posPinkSpeed;
     
-    float posSpeed;
+    //declare new objects
+    note pinkNote;
+    note blueNote;
+    note greenNote;
+    note redNote;
+
     
 };
