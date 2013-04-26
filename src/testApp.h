@@ -19,14 +19,16 @@ public:
     ofVideoGrabber movie;
     
     ofxCvColorImage rgb,hsb;
-    ofxCvGrayscaleImage hue, hue2,sat,bri,filtered, filtered2;
-    ofxCvContourFinder contours, c2;
+    ofxCvGrayscaleImage hue, sat,bri,filteredPink, filteredBlue, filteredGreen, filteredRed;
+    ofxCvContourFinder contoursPink, contoursBlue, contoursGreen, contoursRed;
     
     ofxBlobTracker  tracker;
     
     int findHue;
-    int orange;
+    int pink;
     int blue;
+    int green;
+    int red;
     
     int w, h;
     int defineHue;

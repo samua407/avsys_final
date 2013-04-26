@@ -6,8 +6,10 @@ void testApp::setup(){
     
     w = 320;
     h = 240;
-    orange = 178;
+    pink = 178; //ORANGE NOW. CHANGE TO CORRECT VALUE
     blue = 105;
+    green = 10; //CHANGE TO CORRECT VALUE
+    red = 70; //CHANGE TO CORRECT VALUE
     
     movie.initGrabber(w, h, true);
     
@@ -17,8 +19,10 @@ void testApp::setup(){
     hue.allocate(w, h);
     sat.allocate(w, h);
     bri.allocate(w, h);
-    filtered.allocate(w, h);
-    filtered2.allocate(w, h);
+    filteredPink.allocate(w, h);
+    filteredRed.allocate(w, h);
+    filteredBlue.allocate(w, h);
+    filteredGreen.allocate(w, h);
  
 
 }
@@ -47,21 +51,45 @@ void testApp::update(){
         
         //color tracking begins
         
+        //PINK COLOR TRACKING
         //filter image based on the hue value were looking for
         for (int i=0; i<w*h; i++) {
-            filtered.getPixels()[i] = ofInRange(hue.getPixels()[i],orange-5,orange+5);
+            filteredPink.getPixels()[i] = ofInRange(hue.getPixels()[i],pink-5,pink+5);
         }
         
         //run the contour finder on the filtered image to find blobs with a certain hue
-        contours.findContours(filtered, 50, w*h, 1, false);
+        contoursPink.findContours(filteredPink, 50, w*h, 1, false);
         
+        
+        //BLUE COLOR TRACKING
         //filter image based on the hue value were looking for
         for (int i=0; i<w*h; i++) {
-            filtered2.getPixels()[i] = ofInRange(hue.getPixels()[i],blue-5,blue+5);
+            filteredBlue.getPixels()[i] = ofInRange(hue.getPixels()[i],blue-5,blue+5);
         }
         
         //run the contour finder on the filtered image to find blobs with a certain hue
-        c2.findContours(filtered2, 50, w*h/2, 1, false);
+        contoursBlue.findContours(filteredBlue, 50, w*h/2, 1, false);
+        
+        
+        
+        //GREEN COLOR TRACKING
+        //filter image based on the hue value were looking for
+        for (int i=0; i<w*h; i++) {
+            filteredGreen.getPixels()[i] = ofInRange(hue.getPixels()[i],green-5,green+5);
+        }
+        
+        //run the contour finder on the filtered image to find blobs with a certain hue
+        contoursGreen.findContours(filteredGreen, 50, w*h, 1, false);
+        
+        
+        //RED COLOR TRACKING
+        //filter image based on the hue value were looking for
+        for (int i=0; i<w*h; i++) {
+            filteredRed.getPixels()[i] = ofInRange(hue.getPixels()[i],red-5,red+5);
+        }
+        
+        //run the contour finder on the filtered image to find blobs with a certain hue
+        contoursRed.findContours(filteredRed, 50, w*h/2, 1, false);
         
     }
     
@@ -71,30 +99,22 @@ void testApp::update(){
 void testApp::draw(){
     ofSetColor(255,255,255);
     
-    rgb.draw(0,0);
-    contours.draw(0,480);
-    c2.draw(400,480);
+    rgb.draw(w/2,2);
+    contoursPink.draw(0,240);
+    ofDrawBitmapString("Pink countours (above)", 5, 490);
+    ofDrawBitmapString("Velocity: ", 5, 505); //ADD VELOCITY
+    contoursBlue.draw(w,240);
+    ofDrawBitmapString("Blue contours (above)", w+5, 490);
+    ofDrawBitmapString("Velocity: ", w+5, 505); //ADD VELOCITY
+    contoursGreen.draw(0, 500);
+    ofDrawBitmapString("Green contours (above)", 5, 750);
+    ofDrawBitmapString("Velocity: ", 5, 765); //ADD VELOCITY
+    contoursRed.draw(w, 500);
+    ofDrawBitmapString("Red contours (above)", w+5, 750);
+    ofDrawBitmapString("Velocity: ", w+5, 765); //ADD VELOCITY
     
     ofSetColor(255, 0, 0);
     ofFill();
-    
-    //draw red circles for found blobs
-    for (int i=0; i<contours.nBlobs; i++) {
-        
-        ofCircle(contours.blobs[i].centroid.x, contours.blobs[i].centroid.y, 20);
-        pos.x = contours.blobs[i].centroid.x;
-        pos.y = contours.blobs[i].centroid.y;
-        
-        posSpeed = newPos.x - pos.x;
-        
-        //draw xPos
-        string xposition = "xPos: "+ofToString(pos.x, 15);
-        ofDrawBitmapString(xposition, 100, 100);
-        
-        //draw yPos
-        string yposition = "yPos: "+ofToString(pos.y, 15);
-        ofDrawBitmapString(yposition, 100, 125);
-    }
     
     
 }
