@@ -6,6 +6,9 @@
 //
 //
 
+#pragma once
+
+
 #include "ofMain.h"
 #include "ofxOpenCv.h"
 #include "ofxBlobTracker.h"
@@ -13,20 +16,29 @@
 
 
 
+//class superSmartOfImage : public ofImage {
+//    
+//  // all of ofImage
+//    
+//    void mySuperFunction(){
+//        
+//    }
+//    
+//};
 
-class note: {
+
+class note   {
     
 public:
     
     //methods
     
-    void colorVel(ofxCvContourFinder);
-    void colorVelSmooth();
-    void sendColorVel(string);
+    //ofxCvColorImage img;
+    
+    int colorVel(ofxCvContourFinder &_cont, string activeColor);
 
     
     //constructor
-    
     note();
     
     //variables
@@ -44,7 +56,6 @@ public:
 
     //message
     string activeColor;
-    int slowYourRoll = 0;
     ofxOscSender sender;
     
 };

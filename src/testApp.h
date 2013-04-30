@@ -6,6 +6,9 @@
 #include "ofxOsc.h"
 #include "note.h"
 
+#define HOST "localhost"
+#define PORT 12345
+
 
 
 class testApp : public ofBaseApp{
@@ -44,5 +47,10 @@ public:
     note greenNote;
     note redNote;
 
-    
+    //message
+    ofxOscSender sender;
+    int slowYourRoll = 0;
+    int velocitySmoothed;
+
+
 };
