@@ -34,15 +34,12 @@ int note::colorVel(ofxCvContourFinder &contours, string activeColor){
         if (velocity < 50){
                
             velocitySmoothed = 0.98 * velocitySmoothed + 0.02 * velocity;
-            //return velocitySmoothed;
 
         }
         
         v1.set(pos.x, pos.y);
         
     }
-    
-    //cout << velocitySmoothed << endl;
     
     //return 0;
     

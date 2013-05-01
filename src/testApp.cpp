@@ -77,9 +77,7 @@ void testApp::update(){
         contoursPink.findContours(filteredPink, 50, w*h, 1, false);
                 
         //calculate velocity of color, smooth velocity, and send to OSC with color name
-        pinkNote.colorVel(contoursPink, "pink");
-//        pinkNote.sendColorVel("pink");
-        
+        pinkNote.colorVel(contoursPink, "pink");        
         
         
         //BLUE COLOR TRACKING
@@ -93,8 +91,7 @@ void testApp::update(){
         
         //calculate velocity of color, smooth velocity, and send to OSC with color name
         blueNote.colorVel(contoursBlue, "blue");
-        //blueNote.sendColorVel("blue");
-        
+       
         
         
         //GREEN COLOR TRACKING
@@ -107,8 +104,7 @@ void testApp::update(){
         contoursGreen.findContours(filteredGreen, 50, w*h, 1, false);
         
         //calculate velocity of color, smooth velocity, and send to OSC with color name
-        greenNote.colorVel(contoursGreen, "green");
-//        greenNote.sendColorVel("green");
+        greenNote.colorVel(contoursGreen, "green");        
         
         
         
@@ -123,9 +119,6 @@ void testApp::update(){
         
         //calculate velocity of color, smooth velocity, and send to OSC with color name
         redNote.colorVel(contoursRed, "red");
-        
-        
-//        redNote.sendColorVel("red");
 
     }
 
@@ -134,27 +127,86 @@ void testApp::update(){
 //SEND MESSAGE
 ///////////////
     
-    cout << greenNote.velocitySmoothed << endl;
+    //NOTE: VelocitySmooth was netting dropping to zero within seconds, so we are NOT sending velocitySmoothed. We are sending velocity as a placeholder until we figure out velocitySmoothed. 
     
-//    //if the movement on the x axis of the colored blob is greater than 1 unit (in either direction), then:
-//    if(velocitySmoothed > 5){
-//        
-//        //SEND to OSC the activeColor and posDiffX (velocity on the x axis) (i know theres a way to calculate velocity of vx + vy)
-//        
-//        if (slowYourRoll % 20 == 0){
-//            ofxOscMessage x;
-//            x.setAddress("/playtone");
-//            x.addIntArg(velocitySmoothed);
-//            ///x.addStringArg(activeColor);
-//            sender.sendMessage(x);
-//            cout << velocitySmoothed << " sent." << endl;
-//        }
-//        slowYourRoll++;
+////////SEND PINK
     
-        
-//    }
+    //if the movement on the x axis of the colored blob is greater than 1 unit (in either direction), then:
+    if(pinkNote.velocity > 5){       
+        if (slowYourRoll % 20 == 0){
+            
+            //build message p with the address /playtone, the arguement pinkNote.velocity and the string "pink".
+            ofxOscMessage p;
+            p.setAddress("/playtone");
+            p.addIntArg(pinkNote.velocity);
+            p.addStringArg("pink");
+            sender.sendMessage(p);
+            cout << "pink velocity of " << pinkNote.velocity << " sent." << endl;
+        }
+    slowYourRoll++;
+   }
+    
 
-}
+////////SEND BLUE
+    
+    //if the movement on the x axis of the colored blob is greater than 1 unit (in either direction), then:
+    if(blueNote.velocity > 5){
+        if (slowYourRoll % 20 == 0){
+            
+            //build message p with the address /playtone, the arguement pinkNote.velocity and the string "blue".
+            ofxOscMessage b;
+            b.setAddress("/playtone");
+            b.addIntArg(blueNote.velocity);
+            b.addStringArg("blue");
+            sender.sendMessage(b);
+            cout << "blue velocity of " << blueNote.velocity << " sent." << endl;
+        }
+        slowYourRoll++;
+    }
+    
+    
+////////SEND GREEN
+    
+    //if the movement on the x axis of the colored blob is greater than 1 unit (in either direction), then:
+    if(greenNote.velocity > 5){
+        if (slowYourRoll % 20 == 0){
+            
+            //build message p with the address /playtone, the arguement pinkNote.velocity and the string "green".
+            ofxOscMessage g;
+            g.setAddress("/playtone");
+            g.addIntArg(greenNote.velocity);
+            g.addStringArg("green");
+            sender.sendMessage(g);
+            cout << "green velocity of " << greenNote.velocity << " sent." << endl;
+        }
+        slowYourRoll++;
+    }
+    
+    
+////////SEND RED
+    
+    //if the movement on the x axis of the colored blob is greater than 1 unit (in either direction), then:
+    if(redNote.velocity > 5){
+        if (slowYourRoll % 20 == 0){
+            
+            //build message p with the address /playtone, the arguement pinkNote.velocity and the string "red".
+            ofxOscMessage r;
+            r.setAddress("/playtone");
+            r.addIntArg(redNote.velocity);
+            r.addStringArg("red");
+            sender.sendMessage(r);
+            cout << "red velocity of " << redNote.velocity << " sent." << endl;
+        }
+        slowYourRoll++;
+    }
+
+    
+} // end of void testApp::update()
+
+
+
+
+
 
 //--------------------------------------------------------------
 void testApp::draw(){
