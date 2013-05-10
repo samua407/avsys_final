@@ -141,7 +141,7 @@ void testApp::update(){
             p.addIntArg(pinkNote.velocity);
             p.addStringArg("pink");
             sender.sendMessage(p);
-            cout << "pink velocity of " << pinkNote.velocity << " sent." << endl;
+            //cout << "pink velocity of " << pinkNote.velocity << " sent." << endl;
         }
     slowYourRoll++;
    }
@@ -159,7 +159,7 @@ void testApp::update(){
             b.addIntArg(blueNote.velocity);
             b.addStringArg("blue");
             sender.sendMessage(b);
-            cout << "blue velocity of " << blueNote.velocity << " sent." << endl;
+           // cout << "blue velocity of " << blueNote.velocity << " sent." << endl;
         }
         slowYourRoll++;
     }
@@ -178,6 +178,8 @@ void testApp::update(){
             g.addStringArg("green");
             sender.sendMessage(g);
             cout << "green velocity of " << greenNote.velocity << " sent." << endl;
+            //cout << "green velocity smoothed is " << greenNote.velocitySmoothed << endl;
+
         }
         slowYourRoll++;
     }
@@ -195,7 +197,7 @@ void testApp::update(){
             r.addIntArg(redNote.velocity);
             r.addStringArg("red");
             sender.sendMessage(r);
-            cout << "red velocity of " << redNote.velocity << " sent." << endl;
+           // cout << "red velocity of " << redNote.velocity << " sent." << endl;
         }
         slowYourRoll++;
     }
