@@ -30,8 +30,8 @@ void testApp::setup(){
     filteredGreen.allocate(w, h);
     
     // open an outgoing connection to HOST:PORT
-	sender.setup(HOST, PORT);
-    //sender.setup("127.0.0.1", 2468);
+	//sender.setup(HOST, PORT);
+    sender.setup("127.0.0.1", 7771);
  
 
 }
@@ -178,7 +178,7 @@ void testApp::update(){
             g.addStringArg("green");
             sender.sendMessage(g);
             //cout << "green velocity of " << greenNote.velocity << " sent." << endl;
-            cout << "green velocity smoothed is " << greenNote.velocitySmoothed << endl;
+            cout << "green smoothed velocity of " << greenNote.velocitySmoothed << " sent." << endl;
 
         }
         slowYourRoll++;
@@ -198,6 +198,7 @@ void testApp::update(){
             r.addStringArg("red");
             sender.sendMessage(r);
             //cout << "red velocity of " << redNote.velocity << " sent." << endl;
+
         }
         slowYourRoll++;
     }
